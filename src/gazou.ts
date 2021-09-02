@@ -37,7 +37,6 @@ const responseGazou = async (
       )
       .flat(1)
 
-    console.log(images)
     const randomImage = images[Math.floor(Math.random() * images.length)]
 
     if (typeof randomImage.url === `string`) {
