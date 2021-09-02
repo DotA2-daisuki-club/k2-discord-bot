@@ -27,18 +27,13 @@ const responseGazou = async (
 
   if (gazouChannel.isText() && gazouChannel instanceof TextChannel) {
     const messages = await gazouChannel.messages.fetch()
-    const imageFileTypes = [`jpg`, `jpeg`, `JPEG`, `png`, `PNG`, `bpm`] as const
     const images = messages
       .filter(message => Object.keys(message.attachments).length === 0)
       .map(message =>
-        message.attachments
-          .filter(file =>
-            imageFileTypes.some(fileType => file?.name?.endsWith(fileType))
-          )
-          .map(image => ({
-            url: image.attachment,
-            author: message.author.username
-          }))
+        message.attachments.map(image => ({
+          url: image.attachment,
+          author: message.author.username
+        }))
       )
       .flat(1)
 
