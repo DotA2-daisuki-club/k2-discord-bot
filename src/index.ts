@@ -19,6 +19,7 @@ const main = (): void => {
       return
     }
 
+    // botコマンドを増やすときはユニオン型で対応させてね
     type Command = `/gazou`
     const [command, ...args] = message.content.split(` `) as [
       Command,

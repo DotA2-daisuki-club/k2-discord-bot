@@ -1,4 +1,4 @@
-import { Message, TextChannel } from 'discord.js'
+import { Message, TextChannel, GUILD_PRIVATE_THREAD } from 'discord.js'
 import { GAZOU_CHANNEL_ID } from './const'
 
 const responseGazou = async (
@@ -20,22 +20,29 @@ const responseGazou = async (
       )
     : await client.channels.fetch(GAZOU_CHANNEL_ID)
 
-  if (!gazouChannel) {
+  if (!gazouChannel || gazouChannel.type === GUILD_PRIVATE_THREAD) {
     message.channel.send(`そんな名前のチャンネルはないぞまぬけ`)
     return
   }
 
   if (gazouChannel.isText() && gazouChannel instanceof TextChannel) {
-    const messages = await gazouChannel.messages.fetch()
+    const messages = await gazouChannel.messages.fetch({ limit: 200 })
     const images = messages
       .filter(message => Object.keys(message.attachments).length === 0)
-      .map(message => message.attachments.map(image => image.attachment))
+      .map(message =>
+        message.attachments.map(image => ({
+          url: image.attachment,
+          author: message.author
+        }))
+      )
       .flat(1)
 
     const randomImage = images[Math.floor(Math.random() * images.length)]
 
-    if (typeof randomImage === `string`) {
-      message.channel.send(randomImage)
+    if (typeof randomImage.url === `string`) {
+      message.channel.send(
+        `${randomImage.url}\n by ${randomImage.author.username}`
+      )
     }
   }
 }
