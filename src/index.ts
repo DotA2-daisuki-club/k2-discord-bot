@@ -7,13 +7,26 @@ require('dotenv').config()
 const main = (): void => {
   const client = new Client()
 
-  client.once(`ready`, async () => {
-    console.log(`準備完了`)
-  })
+  client.once(
+    `ready`,
+    async (): Promise<void> => {
+      console.log(`準備完了`)
+    }
+  )
 
-  client.on(`message`, async message => {
-    if (message.content === `/gazou`) {
-      await responseGazou(message)
+  client.on(`message`, message => {
+    if (message.author.bot) {
+      return
+    }
+
+    type Command = `/gazou`
+    const [command, ...args] = message.content.split(` `) as [
+      Command,
+      ...(string | never)[]
+    ]
+
+    if (command === `/gazou`) {
+      responseGazou(message, args)
     }
   })
 
