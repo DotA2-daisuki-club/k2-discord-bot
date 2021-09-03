@@ -43,6 +43,7 @@ const responseGazou = async (
     let imagesNotDuplicate: typeof images = []
     for (const image of images) {
       if (
+        image.filename === `unknown.png` ||
         !imageCache.some(
           ({ filename, author }) =>
             filename === image.filename && author === image.author
@@ -60,8 +61,7 @@ const responseGazou = async (
       imagesNotDuplicate[Math.floor(Math.random() * imagesNotDuplicate.length)]
 
     if (typeof randomImage.url === `string`) {
-      console.log(images.length)
-      console.log(imagesNotDuplicate.length)
+      console.log(imagesNotDuplicate)
       message.channel.send(randomImage.url)
       message.channel.send(`by ${randomImage.author}`)
     }
