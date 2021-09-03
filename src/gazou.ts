@@ -43,7 +43,6 @@ const responseGazou = async (
     let imagesNotDuplicate: typeof images = []
     for (const image of images) {
       if (
-        image.filename === `unknown.png` ||
         !imageCache.some(
           ({ filename, author }) =>
             filename === image.filename && author === image.author
