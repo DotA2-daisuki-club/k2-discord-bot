@@ -148,8 +148,10 @@ checksum = "defd4e7873dbddba6c7c91e199c7fcb946abc4a6a4ac3195400bcfb01b5de877"
 dependencies = [
  "android-tzdata",
  "iana-time-zone",
+ "js-sys",
  "num-traits",
  "serde",
+ "wasm-bindgen",
  "windows-targets",
 ]
 
@@ -552,6 +554,7 @@ dependencies = [
 name = "k2-discord-bot"
 version = "0.1.0"
 dependencies = [
+ "chrono",
  "dotenv",
  "rand",
  "serde",
